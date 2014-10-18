@@ -8,17 +8,21 @@ define(['ace', 'message', 'geometry'], function(ace, message, geometry){
 			    "radius":0.5,
 			    "center":[0,0,0]
 			}
-		},{
-			"type":"cylinder",
-			"properties": {
-			    "radius":0.2,
-				"start":[0,1,0],
-				"end":[0,-1,0]
-			},
-			"operation": "sub"
-		},{
+		},
+		{
 		    "type": "cylinder",
 		    "properties": {
+		    	"slices":64,
+		        "radius":0.2,
+		        "start":[0,1,0],
+		        "end":[0,-1,0]
+		    },
+		    "operation": "sub"
+		},
+		{
+		    "type": "cylinder",
+		    "properties": {
+		    	"slices":64,
 		        "radius":0.6,
 		        "start":[1,0,0],
 		        "end":[-1,0,0]

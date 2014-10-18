@@ -37,6 +37,7 @@ define(["threejs"], function(threejs){
 	function initScene() {
 		//add ground
 		//var planegeometry = new THREE.PlaneGeometry(2000, 2000);
+		/*
 		var gridgeom = new THREE.PlaneGeometry(5,5,10,10);
 		gridgeom.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 		var grid = new THREE.Mesh(gridgeom, new THREE.MeshPhongMaterial( { color: 0x000000, transparent: true, opacity: 0.1, wireframe: true , side: THREE.DoubleSide} ));
@@ -46,7 +47,7 @@ define(["threejs"], function(threejs){
 		sgridgeom.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 		var sgrid = new THREE.Mesh(sgridgeom, new THREE.MeshPhongMaterial( { color: 0x0000FF, transparent: true, opacity: 0.05, wireframe: true , side: THREE.DoubleSide} ));
 		scene.add(sgrid);
-
+		*/
 		var cubegeom = new THREE.CubeGeometry(1,1,1);
 		component = new THREE.Mesh(cubegeom, new THREE.MeshPhongMaterial( { color: 0x000000, wireframe: true , side: THREE.DoubleSide} ));
 		scene.add(component);
@@ -55,8 +56,9 @@ define(["threejs"], function(threejs){
 	function initLighting() {
 		//lighting
 		var directionalLight = new THREE.DirectionalLight(0xffffff);
-		directionalLight.color.setHSL( 0.1, 1, 0.1 );
-		directionalLight.position.set(0, 1000, 0);
+		directionalLight.color.setHSL( 0.1, 1, 0.3 );
+		directionalLight.position.set(0, 1000, 1000);
+		/*
 		directionalLight.castShadow=true;
 		directionalLight.shadowDarkness = 0.1;
 		directionalLight.shadowMapWidth = 2048/1;
@@ -66,11 +68,13 @@ define(["threejs"], function(threejs){
 		directionalLight.shadowCameraTop      =  2000;
 		directionalLight.shadowCameraBottom   = -2000;
 		//directionalLight.shadowCameraVisible = true;
+		*/
 		scene.add(directionalLight);
 
+
 		var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-		hemiLight.color.setHSL( 0.1, 1, 1 );
-		hemiLight.groundColor.setHSL( 0.095, 1, 1 );
+		hemiLight.color.setHSL( 0.1, 1, 0.2 );
+		hemiLight.groundColor.setHSL( 0.095, 1, 0.2 );
 		hemiLight.position.set( 0, 500, 0 );
 		scene.add( hemiLight );
 	}
@@ -84,25 +88,32 @@ define(["threejs"], function(threejs){
 
 	function update(polygons) {
 		var newGeometry = new THREE.Geometry();
-		var vertcount = 0;
+		var vertcount = -1;
 		for(var i in polygons) {
 			for(var j in polygons[i].vertices) {
 				var pos = polygons[i].vertices[j].pos;
 				newGeometry.vertices.push(new THREE.Vector3(pos.x,pos.y,pos.z));
 				vertcount+=1;
 			}
-			//console.log(vertcount);
-			newGeometry.faces.push(new THREE.Face3(vertcount-1, vertcount-3, vertcount-2 ));
-			if(polygons[i].vertices.length==4){
-				newGeometry.faces.push(new THREE.Face3(vertcount-1, vertcount-4, vertcount-3 ));
+
+			console.log(polygons[i].vertices.length);
+			for(var k=0; k<polygons[i].vertices.length-1; k++) {
+				//console.log(i);
+				newGeometry.faces.push(new THREE.Face3(vertcount, vertcount-(1+k), vertcount-(k) ));
 			}
+			
+			//newGeometry.faces.push(new THREE.Face3(vertcount-1, vertcount-3, vertcount-2 ));
+
+			//if(polygons[i].vertices.length==4){
+			//	newGeometry.faces.push(new THREE.Face3(vertcount-1, vertcount-4, vertcount-3 ));
+			//}
 		}
 		
 		newGeometry.computeFaceNormals();
 		//newGeometry.computeVertexNormals();
 
 		scene.remove(component);
-		component = new THREE.Mesh(newGeometry, new THREE.MeshPhongMaterial( { color: 0xEEEEEE} ) );
+		component = new THREE.Mesh(newGeometry, new THREE.MeshPhongMaterial( { color: 0xFF0000 } ) );
 		scene.add(component);
 		render();
 	}
