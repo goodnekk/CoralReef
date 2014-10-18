@@ -9,7 +9,12 @@ define(['marked', 'fs'], function(marked, fs) {
 		});
 	}
 
+	function componenteditor(req, res) {
+		res.render('componenteditor');
+	}
+
 	return({
-		index: index
+		index: index,
+		componenteditor: componenteditor
 	});
 });

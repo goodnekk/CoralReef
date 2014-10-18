@@ -16,6 +16,8 @@ requirejs(['express', 'http', 'routes', 'path'], function (express, http, routes
 
 	//routes
 	app.get('/', routes.index);
+	app.get('/componenteditor', routes.componenteditor);
+
 
 
 	//setup the server

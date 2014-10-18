@@ -5,6 +5,8 @@ An __open source, socio-technical__ system for __do-it-yourself__ design using _
 
 The most important part is a database containing components and assemblies that people can use to build their own furniture, appliances or even vehicles. There is also a design environment that mediates the design process using the database.
 
+Checkout the [editor](/componenteditor).
+
 ## Basic plan
 
 The database contains components and assemblies. A component is a parametrically defined object. It contains information about: 
